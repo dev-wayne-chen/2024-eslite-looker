@@ -1,0 +1,20 @@
+config {
+    type: "incremental",
+    schema: "model_50",
+    tags: ["model_50", "hourly"]
+}
+
+SELECT
+  executed_date AS `executed_date_ec2_mch_category`,
+  id,
+  mch AS `mch_ec2_mch_category`,
+  mch_3,
+  mch_4,
+  mch_6,
+  mch_description_1,
+  mch_description_2,
+  mch_description_3,
+  mch_description_4,
+  product_line AS `product_line_ec2_mch_category`
+FROM
+  ${ref("ec2", "mch_category")}

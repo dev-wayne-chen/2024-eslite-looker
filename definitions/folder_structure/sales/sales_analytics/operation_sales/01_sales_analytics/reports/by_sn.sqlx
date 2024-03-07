@@ -1,0 +1,90 @@
+config {
+    type: "table",
+    schema: "ec_looker",
+    tags: ["01_sales_analytics", "hourly"],
+    columns: {
+        "Eslite_SN": "26碼",
+        "Product_Name": "商品名稱",
+        "MCH": "MCH",
+        "MCH_Description_3": "MCH名稱",
+        "Sap_Supplier_Name": "供應商名稱",
+        "Sap_Manufacturer_Name": "出版商名稱",
+        "EC2_Order_Item_Detail_All": "訂單筆數",
+        "EC2_Order_Item_Detail_All": "購買品項數",
+        "Real_Quantity": "實際購買數量",
+        "Real_Item_Amount": "實際品項金額",
+        "EC2_Order_Item_Detail_All": "平均訂單價",
+        "EC2_Order_Item_Detail_All": "平均冊單價",
+        "Main_Order_Day": "訂單開始日",
+        "Main_Order_Day": "訂單結束日",
+        "Profit_Center": "利潤中心",
+        "Sales_Source": "銷售來源",
+        "Payment_Type_Desc": "付款方式",
+        "Shipping_Type_Desc": "運送方式",
+        "Sales_Status": "銷售狀態",
+        "Sap_Product_Line": "採購線別",
+        "Is_Preorder": "是否預購",
+        "MCH3": "MCH3",
+        "MCH_4": "MCH4",
+        "MCH_6": "MCH6",
+        "Order_Number": "子訂單號碼",
+        "Shopee_Order_ID": "蝦皮訂單編號",
+        "Sap_Supplier_ID": "SAP供應商ID",
+        "Sub_Status_Desc": "訂單狀態",
+        "L1": "類別1",
+        "L2": "類別2",
+        "L3": "類別3",
+        "L1_2": "類別1-2",
+        "product_id": "產品ID",
+        "real_quantity": "實際購買數量",
+        "real_item_amount": "實際購買金額",
+    }
+}
+
+SELECT
+  EC2_Order_Item_Detail_All.Eslite_SN AS `26碼`,
+  EC2_Order_Item_Detail_All.Product_Name,
+  EC2_Order_Item_Detail_All.MCH,
+  EC2_MCH_Category.MCH_Description_3,
+  EC2_Order_Item_Detail_All.Sap_Supplier_Name,
+  EC2_Order_Item_Detail_All.Sap_Manufacturer_Name,
+  EC2_Order_Item_Detail_All.real_quantity,
+  EC2_Order_Item_Detail_All.real_item_amount,
+  EC2_Order_Item_Detail_All.Main_Order_Day,
+  -- EC2_Order_Item_Detail_All.Main_Order_Day,  # google sheet 上有兩個一樣欄位
+  EC2_Order_Item_Detail_All.Profit_Center,
+  EC2_Order_Item_Detail_All.Sales_Source,
+  EC2_Order_Item_Detail_All.Payment_Type_Desc,
+  EC2_Order_Item_Detail_All.Shipping_Type_Desc,
+  EC2_Order_Item_Detail_All.Sales_Status,
+  EC2_Order_Item_Detail_All.Sap_Product_Line,
+  EC2_Order_Item_Detail_All.Is_Preorder,
+  EC2_Order_Item_Detail_All.MCH3,
+  EC2_MCH_Category.MCH_4,
+  EC2_MCH_Category.MCH_6,
+  EC2_Order_Item_Detail_All.Order_Number,
+  EC2_Order_Item_Detail_All.Shopee_Order_ID,
+  EC2_Order_Item_Detail_All.Sap_Supplier_ID,
+  EC2_Order_Item_Detail_All.Sub_Status_Desc,
+  EC2_Order_Item_Detail_All.product_id,
+  -- CASE
+  --   WHEN EC2_Order_Item_Detail_All.Eslite_SN IN ('2000000029009', '2000000023007') THEN '運費'
+  -- ELSE
+  --   prpt_Category_Product1.L1
+  -- END
+  -- AS L1,
+  -- prpt_Category_Product1.L1,
+  -- prpt_Category_Product1.L2,
+  -- prpt_Category_Product1.L3,
+  -- prpt_Category_Product1.L1_2
+FROM
+  ${ref("model_50", "ec2_order_item_detail_all")} AS ec2_order_item_detail_all
+LEFT JOIN
+  ${ref("model_50", "ec2_mch_category")} AS ec2_mch_category
+ON
+  ec2_order_item_detail_all.mch = ec2_mch_category.mch_ec2_mch_category
+LEFT JOIN
+  ${ref("model_50", "ec2_return_item_detail")} AS ec2_return_item_detail
+ON
+  ec2_order_item_detail_all.main_order_id = ec2_return_item_detail.main_order_id_ec2_return_item_detail
+  AND ec2_order_item_detail_all.sub_order_item_id = ec2_return_item_detail.sub_order_item_id_ec2_return_item_detail

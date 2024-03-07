@@ -1,0 +1,15 @@
+config {
+    type: "table",
+    schema: "model_1",
+  tags: ["model_1", "每6小時更新(08:45-15:45)"]
+}
+
+SELECT
+  l1,
+  l1_1,
+  l1_2,
+  l2,
+  l3,
+  mch AS mch_prpt_category_product1
+FROM
+  ${ref("prpt", "category_product1")}

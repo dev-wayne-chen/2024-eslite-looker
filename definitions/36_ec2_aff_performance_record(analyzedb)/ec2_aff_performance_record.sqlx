@@ -1,0 +1,52 @@
+config {
+    type: "table",
+    schema: "model_36",
+    tags: ["model_1", "每6小時更新(08:45-15:45)"]
+}
+
+SELECT
+  actually_price,
+  card_number,
+  created_at,
+  (CASE
+      WHEN (NOT (CAST(CAST(TIMESTAMP(CAST(created_date AS STRING), 'YYYY-MM-DD') AS TIMESTAMP) AS DATE) IS NULL)) THEN CAST(CAST(TIMESTAMP(CAST(created_date AS STRING), 'YYYY-MM-DD') AS TIMESTAMP) AS DATE)
+      WHEN (NOT (CAST(CAST(created_date AS STRING) AS DATE) IS NULL)) THEN CAST(CAST(created_date AS STRING) AS DATE)
+    ELSE
+    NULL
+  END
+    ) AS created_date,
+  eslite_sn,
+  executed_date,
+  invoice_date,
+  main_order_id,
+  mch,
+  member_id,
+  order_date,
+  order_number,
+  order_status,
+  order_status_desc,
+  order_type,
+  performance_date,
+  performance_day,
+  performance_month,
+  performance_year,
+  product_guid,
+  product_name,
+  profit_sharings,
+  promoter_card_number,
+  quantity,
+  return_sub_order_item_id,
+  reward_daily_points,
+  reward_type,
+  shipped_at,
+  sub_order_item_id,
+  sub_order_number,
+  updated_at,
+  utm_campaign,
+  utm_mall_id,
+  utm_product_guid,
+  utm_time,
+  vendor_id,
+  vendor_name,
+FROM
+  ${ref("ec2", "aff_performance_record")}
