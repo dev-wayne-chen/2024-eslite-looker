@@ -1,7 +1,7 @@
 config {
     type: "incremental",
     schema: "model_50",
-    tags: ["model_50", "hourly"]
+    tags: ["model_50", "daily"]
 }
 
 SELECT

@@ -7,8 +7,8 @@
     "sub_order_items",
     "sub_orders",
 
-    "aff_performance_record"
-
+    "aff_performance_record",
+    "allowance_detail"
 ].forEach((name) =>
     declare({
         database: "ec-dev-412708",
