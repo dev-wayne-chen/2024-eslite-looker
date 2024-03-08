@@ -115,4 +115,9 @@ SELECT
   updated_at,
   utm_url,
 FROM
-  ${ref("ec2", "main_orders")}
+--    ${ref("ec2", "main_orders")}
+   ${ref("ec2", "order_item_detail_all")}
+
+
+
+

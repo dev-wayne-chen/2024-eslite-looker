@@ -205,3 +205,6 @@ SELECT account_source AS account_source,
   zzconsi AS zzconsi,
   zzrtv1 AS zzrtv1
 FROM ${ref("ec2", "order_item_detail_all")}
+
+
+
