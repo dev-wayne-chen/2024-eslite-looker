@@ -1,5 +1,6 @@
 [
     "mch_category",
+    "order_item_detail",
     "order_item_detail_all",
     "return_item_detail",
    

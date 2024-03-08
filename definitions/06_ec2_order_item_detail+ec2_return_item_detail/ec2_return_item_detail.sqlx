@@ -1,0 +1,53 @@
+config {
+    type: "table",
+    schema: "model_06",
+    tags: ["model_06", "hourly"],
+    columns: {
+        "Esp_Invoice_Number_Revoked_Date": "98單號日期",
+        "Return_Esp_Billing_Number": "98單號",
+        "Return_Item_Price": "98單號金額"
+    }
+}
+
+SELECT
+  cargo_number AS cargo_number,
+  es_invoice_number_revoked_date AS es_invoice_number_revoked_date,
+  esp_invoice_number_revoked_date AS esp_invoice_number_revoked_date,
+  executed_date AS executed_date_ec2_return_item_detail,
+  main_order_id AS main_order_id_ec2_return_item_detail,
+  process_status AS process_status,
+  process_status_note AS process_status_note,
+  product_id AS product_id_ec2_return_item_detail,
+  profit_center AS profit_center_ec2_return_item_detail,
+  return_created_at AS return_created_at,
+  return_created_day AS return_created_day,
+  return_created_month AS return_created_month,
+  return_created_time AS return_created_time,
+  return_created_year AS return_created_year,
+  return_ec_summary_sn AS return_ec_summary_sn,
+  return_es_billing_number AS return_es_billing_number,
+  return_es_dn_number AS return_es_dn_number,
+  return_es_so_number AS return_es_so_number,
+  return_eslite_point AS return_eslite_point,
+  return_esp_billing_number AS return_esp_billing_number,
+  return_esp_dn_number AS return_esp_dn_number,
+  return_esp_so_number AS return_esp_so_number,
+  return_finished_at AS return_finished_at,
+  return_gen_ec01_at AS return_gen_ec01_at,
+  return_item_created_at AS return_item_created_at,
+  return_item_price AS return_item_price,
+  return_item_qty AS return_item_qty,
+  return_item_updated_at AS return_item_updated_at,
+  return_price AS return_price,
+  return_reason AS return_reason,
+  return_status AS return_status,
+  return_status_desc AS return_status_desc,
+  return_sub_order_id AS return_sub_order_id,
+  return_sub_order_item_id AS return_sub_order_item_id,
+  return_type AS return_type,
+  return_type_desc AS return_type_desc,
+  return_updated_at AS return_updated_at,
+  sub_order_id AS sub_order_id_ec2_return_item_detail,
+  sub_order_item_id AS sub_order_item_id_ec2_return_item_detail
+FROM
+  ${ref("ec2", "return_item_detail")}
