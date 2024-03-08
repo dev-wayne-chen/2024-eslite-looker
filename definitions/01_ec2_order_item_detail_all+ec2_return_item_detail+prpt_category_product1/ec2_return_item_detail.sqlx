@@ -1,6 +1,6 @@
 config {
   type: "table",
-  schema: "model_1",
+  schema: "ec-dataset-1",
   tags: ["model_1", "每6小時更新(08:45-15:45)"]
 }
 

@@ -1,10 +1,35 @@
 config {
-  type: "table",
-  schema: "model_1",
-  tags: ["model_1", "每6小時更新(08:45-15:45)"]
+    type: "table",
+    schema: "model_1",
+    tags: ["model_1", "每6小時更新(08:45-15:45)"],
+    columns: {
+        "age_range": "年齡",
+        "date": "date",
+        "Eslite_SN": "26碼",
+        "Is_B2B_Order": "訂單類型",
+        "Main_Order_Day": "訂購年月",
+        "Main_Order_Month": "訂購年月",
+        "MCH": "MCH",
+        "MCH3": "MCH3",
+        "Order_Number": "訂單編號",
+        "paid_card_level_desc": "卡別",
+        "Payment_Type_Desc": "付款方式",
+        "Product Id": "購買品項數",
+        "Product_Name": "商品名稱",
+        "Profit_Center": "利潤中心",
+        "Purchase_Man": "採購人員",
+        "Sales_Source": "銷售來源",
+        "Sales_Status": "銷售狀態",
+        "Sap_Product_Line": "採購人員",
+        "Sap_Supplier_ID": "供應商代碼",
+        "Sap_Supplier_Name": "供應商名稱",
+        "Shipping_Type_Desc": "運送方式",
+        "Shopee_Order_ID": "蝦皮訂單編號",
+    }
 }
 
-SELECT account_source AS account_source,
+SELECT
+  account_source AS account_source,
   account_source_desc AS account_source_desc,
   active_start_date AS active_start_date,
   actually_price AS actually_price,
@@ -204,7 +229,5 @@ SELECT account_source AS account_source,
   warehouse_status_desc AS warehouse_status_desc,
   zzconsi AS zzconsi,
   zzrtv1 AS zzrtv1
-FROM ${ref("ec2", "order_item_detail_all")}
-
-
-
+FROM
+  ${ref("ec2", "order_item_detail_all")}
