@@ -1,0 +1,111 @@
+config {
+    type: "table",
+    schema: "model_02",
+    tags: ["model_02", "daily"]
+}
+
+SELECT
+  a.Shipped_Date,
+  a.Return_Finished_Date,
+  a.Tax_Type_Desc,
+  SUM(a.Price_Positive) AS Price_Positive,
+  SUM(a.Price_Return)+SUM(a.Price_Allowance) AS Price_Negative,
+  SUM(a.Transfer_Cost) AS Transfer_Cost_Positive,
+  SUM(a.Transfer_Cost)*(-1) AS Transfer_Cost_Negative
+FROM (
+  SELECT
+    DATE(T1.Shipped_At) AS Shipped_Date,
+    (CASE
+        WHEN T3.Return_Finished_Date IS NOT NULL THEN T3.Return_Finished_Date
+      ELSE
+      T4.Return_Finished_Date
+    END
+      ) AS Return_Finished_Date,
+    T2.Tax_Type_Desc,
+    T1.Actually_Price+T1.Eslite_Discount_Amount_Price AS Price_Positive,
+    (COALESCE(T3.Return_Item_Price,0)+COALESCE(T3.Return_Eslite_Point,0))*(-1) AS Price_Return,
+    (COALESCE(T4.Return_Item_Price,0)+COALESCE(T4.Return_Eslite_Point,0))*(-1) AS Price_Allowance,
+    COALESCE(T1.Transfer_Cost,0) AS Transfer_Cost
+  FROM
+    ${ref("ec2", "order_item_detail_all")} T1
+  INNER JOIN (
+    SELECT
+      TT2.Main_Order_ID,
+      TT2.Tax_Type_Desc,
+      TT2.Product_ID
+    FROM
+      EC2_Invoice_Detail TT2
+    GROUP BY
+      TT2.Main_Order_ID,
+      TT2.Tax_Type_Desc,
+      TT2.Product_ID) T2
+  ON
+    T1.Main_Order_ID = T2.Main_Order_ID
+    AND T1.Product_ID = T2.Product_ID
+  LEFT JOIN (
+    SELECT
+      S1.Main_Order_ID,
+      S1.Sub_Order_ID,
+      S1.Sub_Order_Item_ID,
+      DATE(S1.Return_Finished_At) AS Return_Finished_Date,
+      SUM(COALESCE(S1.Return_Item_Price,0)) AS Return_Item_Price,
+      SUM(COALESCE(S1.Return_Eslite_Point,0)) AS Return_Eslite_Point
+    FROM
+      ${ref("ec2", "return_item_detail")} S1
+    WHERE
+      S1.Return_Status = 3
+      AND S1.Return_EC_Summary_SN IS NOT NULL
+      --退貨看 EC01,EC02
+    GROUP BY
+      S1.Main_Order_ID,
+      S1.Sub_Order_ID,
+      S1.Sub_Order_Item_ID,
+      DATE(S1.Return_Finished_At)) T3
+    --退貨
+  ON
+    T1.Main_Order_ID = T3.Main_Order_ID
+    --And T1.Sub_Order_ID      = T3.Sub_Order_ID
+    AND T1.Sub_Order_Item_ID = T3.Sub_Order_Item_ID
+  LEFT JOIN (
+    SELECT
+      U1.Main_Order_ID,
+      U1.Sub_Order_ID,
+      U1.Sub_Order_Item_ID,
+      DATE(U1.Return_Finished_At) AS Return_Finished_Date,
+      SUM(COALESCE(U1.Return_Item_Price,0)) AS Return_Item_Price,
+      SUM(COALESCE(U1.Return_Eslite_Point,0)) AS Return_Eslite_Point
+    FROM
+      ${ref("ec2", "return_item_detail")} U1
+    INNER JOIN
+      ${ref("ec2", "allowance_detail")} U2
+    ON
+      U1.Return_Sub_Order_ID = U2.Return_Sub_Order_ID
+      AND U1.Return_Sub_Order_Item_ID = U2.Return_Sub_Order_Item_ID
+    WHERE
+      U1.Return_Status IN (5,
+        6)
+      AND U2.EC_Summary_SN IS NOT NULL
+      --折讓看 EC03
+    GROUP BY
+      U1.Main_Order_ID,
+      U1.Sub_Order_ID,
+      U1.Sub_Order_Item_ID,
+      DATE(U1.Return_Finished_At)) T4
+    --折讓
+  ON
+    T1.Main_Order_ID = T4.Main_Order_ID
+    --And T1.Sub_Order_ID      = T4.Sub_Order_ID
+    AND T1.Sub_Order_Item_ID = T4.Sub_Order_Item_ID
+  WHERE
+    T1.Sub_Status IN (0,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7)
+    AND T1.Is_B2B_Order = 'Y') a
+GROUP BY
+  a.Shipped_Date,
+  a.Return_Finished_Date,
+  a.Tax_Type_Desc
