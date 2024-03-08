@@ -1,7 +1,28 @@
 config {
     type: "table",
     schema: "model_04",
-    tags: ["model_04", "hourly"]
+    tags: ["model_04", "hourly"],
+    columns: {
+        "eslite_sn": "26碼",
+        "installment_period": "分期期別",
+        "is_b2b_order": "訂單類型",
+        "Is_Preorder": "是否預購",
+        "L1": "類別1",
+        "L1_2": "類別1-2",
+        "L1-2": "類別1-2",
+        "main_order_day": "訂單結束日",
+        "main_order_month": "訂購年月",
+        "mch": "MCH",
+        "mch3": "MCH3",
+        "payment_type": "付款方式",
+        "profit_center": "利潤中心",
+        "Purchase_Man": "採購人員",
+        "sales_source": "銷售來源",
+        "sales_status": "銷售狀態",
+        "sap_product_line": "採購線別",
+        "sap_supplier_id": "SAP供應商ID",
+        "shipping_type": "運送方式"
+    }
 }
 
 SELECT
