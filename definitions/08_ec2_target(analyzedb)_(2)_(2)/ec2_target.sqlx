@@ -1,0 +1,27 @@
+config {
+    type: "table",
+    schema: "model_08",
+    tags: ["model_08", "每 4 小時 從上午8:30 到 上午1:30"],
+    columns: {
+        "Category": "目標類別",
+        "L1_2": "類別1-2",
+        "Target_Month": "目標年月"
+    }
+}
+
+SELECT
+  category AS category,
+  l1 AS l1_ec2_target,
+  l1_2 AS l1_2_ec2_target,
+  profit_center AS profit_center_ec2_target,
+  TARGET,
+  target_date,
+  (CASE
+      WHEN (NOT (CAST(CAST(TIMESTAMP(CAST(target_month AS STRING), 'YYYY-MM') AS TIMESTAMP) AS DATE) IS NULL)) THEN CAST(CAST(TIMESTAMP(CAST(target_month AS STRING), 'YYYY-MM') AS TIMESTAMP) AS DATE)
+      WHEN (NOT (CAST(CAST(target_month AS STRING) AS DATE) IS NULL)) THEN CAST(CAST(target_month AS STRING) AS DATE)
+    ELSE
+    NULL
+  END
+    ) AS target_month
+FROM
+  ${ref("ec2", "target")}
