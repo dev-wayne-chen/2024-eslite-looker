@@ -100,7 +100,7 @@ SELECT
   ec2_order_item_detail_all.manufacturer_date AS manufacturer_date,
   ec2_order_item_detail_all.manufacturer_id AS manufacturer_id,
   ec2_order_item_detail_all.manufacturer_sn AS manufacturer_sn,
-  prpt_category_product1.mch AS mch (prpt_category_product1),
+  prpt_category_product1.mch AS mch_prpt_category_product1,
   ec2_order_item_detail_all.mch3 AS mch3,
   ec2_order_item_detail_all.mch AS mch,
   ec2_order_item_detail_all.member_id AS member_id,
