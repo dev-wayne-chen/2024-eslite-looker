@@ -1,11 +1,11 @@
 config {
-  type: "table",
-  schema: "ec-dataset-1",
-  tags: ["model_1", "每6小時更新(08:45-15:45)"]
+    type: "table",
+    schema: "model_1",
+    tags: ["model_1", "每6小時更新(08:45-15:45)"]
 }
 
-
-SELECT cargo_number,
+SELECT
+  cargo_number,
   es_invoice_number_revoked_date,
   esp_invoice_number_revoked_date,
   executed_date,
@@ -44,6 +44,5 @@ SELECT cargo_number,
   return_updated_at,
   sub_order_id,
   sub_order_item_id,
-FROM ${ref("ec2", "return_item_detail")}
-
-
+FROM
+  ${ref("ec2", "return_item_detail")}
