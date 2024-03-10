@@ -1,7 +1,7 @@
 config {
     type: "table",
     schema: "model_36",
-    tags: ["model_36", "每6小時更新(08:45-15:45)"]
+    tags: ["model_36", "weekly"]
 }
 
 SELECT
