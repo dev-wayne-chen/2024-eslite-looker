@@ -1,0 +1,21 @@
+config {
+    type: "table",
+    schema: "model_63",
+    tags: ["model_63", "weekly"],
+    columns: {
+        "Loyalty_Type": "會員購買標籤",
+        "Order_Month": "日期",
+        "Time_Type": "日期類型"
+    }
+}
+
+SELECT
+  card_number,
+  executed_date,
+  loyalty_type,
+  member_id,
+  order_month,
+  time_type,
+  user_id
+FROM
+  ${ref("ec2", "loyalty_type")}

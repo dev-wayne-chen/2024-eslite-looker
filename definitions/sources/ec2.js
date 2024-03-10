@@ -10,7 +10,8 @@
 
     "aff_performance_record",
     "allowance_detail",
-    "target"
+    "target",
+    "loyalty_type"
 ].forEach((name) =>
     declare({
         database: "ec-dev-412708",
