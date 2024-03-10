@@ -1,0 +1,16 @@
+config {
+    type: "table",
+    schema: "model_56",
+    tags: ["model_56", "每4小時更新(8:30)"],
+    columns: {
+
+    }
+}
+
+SELECT
+  days,
+  CAST(order_month AS STRING) AS order_month,
+  CAST(order_year AS STRING) AS order_year,
+  CAST(sap_billing_month AS STRING) AS sap_billing_month
+FROM
+  ${ref("ec", "days")}
