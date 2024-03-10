@@ -1,7 +1,8 @@
 config {
     type: "table",
     schema: "ec_looker",
-    tags: ["01_sales_analytics", "hourly"]
+    tags: ["01_sales_analytics", "hourly"],
+    disabled: true
 }
 
 
