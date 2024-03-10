@@ -1,0 +1,172 @@
+config {
+    type: "table",
+    schema: "model_60",
+    tags: ["model_60", "每4小時更新(08:00-21:00)"],
+    columns: {
+        "Main_Order_Day": "訂購日期",
+        "Eslite_SN": "書號",
+        "SAP_Supplier_ID": "供應商代碼",
+        "SAP_Supplier_Name": "供應商名稱",
+        "MCH_Description_3": "MCH名稱",
+        "MCH3": "MCH3碼",
+        "SAP_Product_Line": "採購線別",
+        "Purchase_Man": "採購人員",
+        "Profit_Center": "利潤中心",
+        "Sales_Source": "銷售來源",
+        "Is_B2B_Order": "訂單類型",
+        "Product_Name": "書名",
+        "Author": "作者",
+        "C001_Online_Stock": "C001庫存量",
+        "F001_Online_Stock": "F001庫存量",
+        "G016_Online_Stock": "G016庫存量",
+        "B2B_Online_Stock": "B2B庫存量",
+        "Ingram_Online_Stock": "Ingram庫存量",
+        "G016_Stock": "G016可銷售庫存",
+        "SAP_Manufacturer_ID": "出版社代碼",
+        "SAP_Manufacturer_Name": "出版社名稱",
+        "Final_Price": "定價",
+        "Retail_Price": "售價",
+        "Sale_Mode_Desc": "商品類型",
+        "Ver_ID_Desc": "版別",
+        "Real_Quantity": "銷售數量",
+        "Real_Item_Amount": "銷售金額",
+        "Online_Stock": "可銷售庫存",
+        "Virtual_Stock": "預購數量",
+        "L1_1": "類別1",
+        "L1_2": "類別1-2",
+        "L2": "類別2",
+        "L3": "類別3"
+    }
+}
+
+SELECT
+  a.Main_Order_Day,
+  a.Eslite_SN,
+  a.Product_ID,
+  a.SAP_Supplier_ID,
+  a.SAP_Supplier_Name,
+  a.MCH,
+  c.MCH_Description_3,
+  a.MCH3,
+  a.SAP_Product_Line,
+  a.Purchase_Man,
+  a.Profit_Center,
+  a.Sales_Source,
+  a.Is_B2B_Order,
+  b.Product_Name,
+  b.Author,
+  b.C001_Online_Stock,
+  b.F001_Online_Stock,
+  b.G016_Online_Stock,
+  b.B2B_Online_Stock,
+  b.Ingram_Online_Stock,
+  b.G016_Stock,
+  b.SAP_Manufacturer_ID,
+  b.SAP_Manufacturer_Name,
+  a.Final_Price,
+  a.Retail_Price,
+  b.Sale_Mode_Desc,
+  b.Ver_ID_Desc,
+  a.Real_Quantity,
+  a.Real_Item_Amount,
+  b.Online_Stock,
+  b.Virtual_Stock,
+  c.MCH_4,
+  c.MCH_6,
+  d.L1_1,
+  d.L1_2,
+  d.L2,
+  d.L3,
+FROM (
+  SELECT
+    S1.Main_Order_Day,
+    S1.Eslite_SN,
+    S1.Product_ID,
+    S1.SAP_Supplier_ID,
+    S1.SAP_Supplier_Name,
+    S1.MCH,
+    S1.MCH3,
+    S1.Product_Line,
+    S1.SAP_Product_Line,
+    S1.Purchase_Man,
+    SUM(S1.Real_Item_Amount) AS Real_Item_Amount,
+    SUM(S1.Real_Quantity) AS Real_Quantity,
+    S1.Final_Price,
+    S1.Retail_Price,
+    S1.Profit_Center,
+    S1.Sales_Source,
+    S1.Is_B2B_Order
+  FROM
+    ${ref("ec2", "order_item_detail_all")} S1
+         Where S1.Sales_Status = '銷貨'
+           And S1.Main_Order_Day >= CURRENT_DATE() - INTERVAL 6 MONTH
+           And S1.Main_Order_Day >= '2020-12-01'
+           And Coalesce(S1.Eslite_SN,'') Not In ('2000000023007','2000000029009')
+  GROUP BY
+    S1.Main_Order_Day,
+    S1.Eslite_SN,
+    S1.Product_ID,
+    S1.SAP_Supplier_ID,
+    S1.SAP_Supplier_Name,
+    S1.MCH,
+    S1.MCH3,
+    S1.Product_Line,
+    S1.SAP_Product_Line,
+    S1.Purchase_Man,
+    S1.Final_Price,
+    S1.Retail_Price,
+    S1.Profit_Center,
+    S1.Sales_Source,
+    S1.Is_B2B_Order) a
+LEFT JOIN (
+  SELECT
+    T1.Eslite_SN,
+    T1.Product_ID,
+    T1.Product_Name,
+    T1.MCH,
+    T1.MCH3,
+    T1.SAP_Product_Line,
+    T1.C001_Online_Stock,
+    T1.F001_Online_Stock,
+    T1.G016_Online_Stock,
+    T1.B2B_Online_Stock,
+    T1.Ingram_Online_Stock + T1.External_Online_Stock AS Ingram_Online_Stock,
+    (CASE
+        WHEN T1.Sale_Mode = 1 THEN COALESCE(T1.Virtual_Stock,0) -COALESCE(T1.Share_Reserve_Stock,0)
+        WHEN T1.Sale_Mode = 3 THEN COALESCE(T1.Ingram_Online_Stock,0)+COALESCE(T1.External_Online_Stock,0)-COALESCE(T1.Share_Reserve_Stock,0)
+      ELSE
+      COALESCE(T1.C001_Online_Stock,0)+COALESCE(T1.B2B_Online_Stock,0) -COALESCE(T1.Share_Reserve_Stock,0)
+    END
+      ) AS Online_Stock,
+    T1.Virtual_Stock,
+    T1.G016_Online_Stock - T1.G016_Reserve_Stock AS G016_Stock,
+    T1.Author,
+    T1.Sale_Mode_Desc,
+    T1.SAP_Manufacturer_ID,
+    T1.SAP_Manufacturer_Name,
+    T1.Ver_ID_Desc
+  FROM
+    ${ref("ec2", "product")} T1) b
+ON
+  a.Product_ID = b.Product_ID
+LEFT JOIN (
+  SELECT
+    C1.MCH,
+    C1.MCH_Description_3,
+    C1.MCH_4,
+    C1.MCH_6
+  FROM
+    ${ref("ec2", "mch_category")} C1) c
+ON
+  b.MCH = c.MCH
+LEFT JOIN (
+  SELECT
+    D1.MCH,
+    D1.L1_1,
+    D1.L1_2,
+    D1.L2,
+    D1.L3
+  FROM
+    ${ref("prpt", "category_product1")} D1) d
+ON
+  a.MCH = d.MCH
