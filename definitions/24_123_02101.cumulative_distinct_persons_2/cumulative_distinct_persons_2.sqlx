@@ -1,0 +1,584 @@
+config {
+    type: "table",
+    schema: "model_24",
+    tags: ["model_24", "weekly"],
+    columns: {
+        "Order_Year": "訂購年月"
+    }
+}
+
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '1' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '1' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '2' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '2' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '3' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '3' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '4' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '4' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '5' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '5' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '6' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '6' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '7' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '7' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '8' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '8' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '9' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '9' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '10' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '10' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '11' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '11' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date - INTERVAL '1' Year)
+      AND (DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '12' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '1' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '1' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '2' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '2' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '3' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '3' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '4' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '4' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '5' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '5' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '6' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '6' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '7' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '7' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '8' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '8' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '9' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '9' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '10' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '10' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '11' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
+UNION ALL
+SELECT
+  a.Order_Year,
+  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+FROM (
+  SELECT
+    SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '11' month AS varchar),1,7) AS Order_Year,
+    T1.Member_ID,
+    COUNT(DISTINCT T1.Main_Order_ID) AS Orders
+  FROM
+    ${ref("ec2", "order_item_detail_all_48969")} T1
+  WHERE
+    (T1.Main_Order_Day BETWEEN DATE_TRUNC('Year',current_date)
+      AND (DATE_TRUNC('Year',current_date) + INTERVAL '12' month - INTERVAL '1' day))
+    AND T1.Sales_Status = '銷貨'
+    AND T1.Profit_Center = 'C001'
+    AND (SUBSTR(T1.Eslite_SN,1,2) = '26'
+      OR T1.Eslite_SN IS NOT NULL)
+  GROUP BY
+    T1.Member_ID
+  HAVING
+    COUNT(DISTINCT T1.Main_Order_ID) >= 2) a
+GROUP BY
+  a.Order_Year
