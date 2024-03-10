@@ -1,0 +1,19 @@
+config {
+    type: "table",
+    schema: "model_31",
+    tags: ["model_31", "daily"],
+    columns: {
+        "Order_Year": "訂購年月"
+    }
+}
+
+SELECT
+  category,
+  l1,
+  l1_2,
+  profit_center AS profit_center_ec2_target,
+  TARGET,
+  target_date,
+  target_month,
+FROM
+  ${ref("ec2", "target")}
