@@ -3,13 +3,14 @@ config {
     schema: "model_24",
     tags: ["model_24", "weekly"],
     columns: {
-        "Order_Year": "訂購年月"
+        "Order_Year": "訂購年月",
+        "member_id": "購買會員數"
     }
 }
 
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) AS varchar),1,7) AS Order_Year,
@@ -33,7 +34,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '1' month AS varchar),1,7) AS Order_Year,
@@ -57,7 +58,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '2' month AS varchar),1,7) AS Order_Year,
@@ -81,7 +82,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '3' month AS varchar),1,7) AS Order_Year,
@@ -105,7 +106,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '4' month AS varchar),1,7) AS Order_Year,
@@ -129,7 +130,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '5' month AS varchar),1,7) AS Order_Year,
@@ -153,7 +154,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '6' month AS varchar),1,7) AS Order_Year,
@@ -177,7 +178,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '7' month AS varchar),1,7) AS Order_Year,
@@ -201,7 +202,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '8' month AS varchar),1,7) AS Order_Year,
@@ -225,7 +226,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '9' month AS varchar),1,7) AS Order_Year,
@@ -249,7 +250,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '10' month AS varchar),1,7) AS Order_Year,
@@ -273,7 +274,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date - INTERVAL '1' Year) + INTERVAL '11' month AS varchar),1,7) AS Order_Year,
@@ -297,7 +298,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) AS varchar),1,7) AS Order_Year,
@@ -321,7 +322,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '1' month AS varchar),1,7) AS Order_Year,
@@ -345,7 +346,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '2' month AS varchar),1,7) AS Order_Year,
@@ -369,7 +370,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '3' month AS varchar),1,7) AS Order_Year,
@@ -393,7 +394,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '4' month AS varchar),1,7) AS Order_Year,
@@ -417,7 +418,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '5' month AS varchar),1,7) AS Order_Year,
@@ -441,7 +442,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '6' month AS varchar),1,7) AS Order_Year,
@@ -465,7 +466,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '7' month AS varchar),1,7) AS Order_Year,
@@ -489,7 +490,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '8' month AS varchar),1,7) AS Order_Year,
@@ -513,7 +514,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '9' month AS varchar),1,7) AS Order_Year,
@@ -537,7 +538,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '10' month AS varchar),1,7) AS Order_Year,
@@ -561,7 +562,7 @@ GROUP BY
 UNION ALL
 SELECT
   a.Order_Year,
-  COUNT(DISTINCT a.Member_ID) AS "購買會員數"
+  COUNT(DISTINCT a.Member_ID) AS member_id
 FROM (
   SELECT
     SUBSTR(CAST(DATE_TRUNC('Year',current_date) + INTERVAL '11' month AS varchar),1,7) AS Order_Year,
