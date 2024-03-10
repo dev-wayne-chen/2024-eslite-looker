@@ -1,0 +1,66 @@
+config {
+    type: "table",
+    schema: "model_49",
+    tags: ["model_49", "daily"],
+    columns: {
+        "Profit_Center": "利潤中心",
+        "Main_Order_Day": "銷售日",
+        "L1": "品類",
+        "Eslite_SN": "商品碼",
+        "Product_Name": "商品名稱",
+        "Eslite_Cost": "誠品成本單價",
+        "Quantity": "數量",
+        "Cost_Amount": "金額",
+        "Purchase_Cost": "EC 採購成本單價",
+        "Real_Quantity": "實際銷售數量",
+        "Retail_Price": "實際銷售單價",
+        "Final_Price": "定價",
+        "Retail_Retail_Price": "實際銷售總金額",
+        "eslite_rebate_amount": "誠品Rebate金額"
+    }
+}
+
+SELECT
+  T2.Profit_Center,
+  T2.Main_Order_Day,
+  T1.L1,
+  T1.Eslite_SN,
+  T1.Product_Name,
+  T1.Eslite_Cost,
+  T1.Quantity,
+  T1.Cost_Amount,
+  T1.Purchase_Cost,
+  T2.Real_Quantity,
+  T2.Retail_Price,
+  T2.Final_Price,
+  T2.Retail_Retail_Price,
+  ROUND((T1.Purchase_Cost*T2.Real_Quantity)-T2.Retail_Retail_Price,0) AS eslite_rebate_amount
+FROM
+  ${ref("trpt", "dead_stock")} T1
+LEFT JOIN (
+  SELECT
+    TT2.Eslite_SN,
+    TT2.Profit_Center,
+    TT2.Main_Order_Day,
+    TT2.Retail_Price,
+    TT2.Final_Price,
+    SUM(TT2.Real_Quantity) AS Real_Quantity,
+    SUM(TT2.Retail_Price*TT2.Real_Quantity) AS Retail_Retail_Price
+  FROM
+    ${ref("ec2", "order_item_detail_all")} TT2
+  WHERE
+    TT2.Sales_Status = '銷貨'
+    AND TT2.Main_Order_Day >= '2022-05-17'
+  GROUP BY
+    TT2.Eslite_SN,
+    TT2.Profit_Center,
+    TT2.Main_Order_Day,
+    TT2.Retail_Price,
+    TT2.Final_Price) T2
+ON
+  T1.Eslite_SN = T2.Eslite_SN
+ORDER BY
+  T2.Profit_Center,
+  T2.Main_Order_Day,
+  T1.L1,
+  T1.Eslite_SN
