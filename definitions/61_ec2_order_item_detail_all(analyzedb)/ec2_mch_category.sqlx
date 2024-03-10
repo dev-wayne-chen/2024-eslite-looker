@@ -1,0 +1,23 @@
+config {
+    type: "table",
+    schema: "model_61",
+    tags: ["model_61", "daily"],
+    columns: {
+        "MCH_Description_2": "MCH名稱"
+    }
+}
+
+SELECT
+  executed_date,
+  id,
+  mch AS mch_ec2_mch_category,
+  mch_3,
+  mch_4,
+  mch_6,
+  mch_description_1,
+  mch_description_2,
+  mch_description_3,
+  mch_description_4,
+  product_line
+FROM
+  ${ref("ec2", "mch_category")}
