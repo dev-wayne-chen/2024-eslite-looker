@@ -1,5 +1,6 @@
 [
     "dead_stock",
+    "ga4"
 
 ].forEach((name) =>
     declare({

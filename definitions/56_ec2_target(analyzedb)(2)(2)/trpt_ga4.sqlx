@@ -1,0 +1,21 @@
+config {
+    type: "table",
+    schema: "model_56",
+    tags: ["model_56", "每4小時更新(8:30)"],
+    columns: {
+
+    }
+}
+
+SELECT
+  (CASE
+      WHEN (NOT (CAST(CAST(TIMESTAMP(CAST(date AS STRING), 'YYYY-MM-DD') AS TIMESTAMP) AS DATE) IS NULL)) THEN CAST(CAST(TIMESTAMP(CAST(date AS STRING), 'YYYY-MM-DD') AS TIMESTAMP) AS DATE)
+      WHEN (NOT (CAST(CAST(date AS STRING) AS DATE) IS NULL)) THEN CAST(CAST(date AS STRING) AS DATE)
+    ELSE
+    NULL
+  END
+    ) AS date,
+  session_source,
+  total
+FROM
+  ${ref("trpt", "ga4")}
