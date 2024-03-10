@@ -1,0 +1,42 @@
+config {
+    type: "table",
+    schema: "model_18",
+    tags: ["model_18", "weekly"],
+    columns: {
+        "Main_Order_Month": "訂購月份",
+        "Profit_Center": "利潤中心",
+        "Shipping_Type_Desc": "運送方式"
+    }
+}
+
+SELECT
+  T1.Main_Order_Month,
+  T1.Main_Order_Day,
+  T1.Profit_Center,
+  T1.Main_Order_ID,
+  T1.Shipping_Type_Desc,
+  '01_銷貨' AS Sales_Status,
+  SUM(CASE
+      WHEN T1.Eslite_SN IN ('2000000023007', '2000000029009') THEN 0
+    ELSE
+    T1.Real_Item_Amount
+  END
+    ) AS Exclude_Shipping_Cost,
+  SUM(T1.Real_Item_Amount) AS Real_Item_Amount,
+  SUM(CASE
+      WHEN T1.Eslite_SN IN ('2000000023007', '2000000029009') THEN T1.Real_Item_Amount
+    ELSE
+    0
+  END
+    ) AS Shipping_Cost
+FROM
+  ${ref("ec2", "order_item_detail_all")} T1
+WHERE
+  T1.Main_Order_Month >= '2020-12'
+  AND T1.Sales_Status = '銷貨'
+GROUP BY
+  T1.Main_Order_Month,
+  T1.Main_Order_Day,
+  T1.Profit_Center,
+  T1.Main_Order_ID,
+  T1.Shipping_Type_Desc
