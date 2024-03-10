@@ -1,7 +1,23 @@
 config {
     type: "table",
     schema: "model_36",
-    tags: ["model_36", "weekly"]
+    tags: ["model_36", "weekly"],
+    columns: {
+        "Actually_Price": "有效金額",
+        "Created_Date": "日結日",
+        "Eslite_SN": "26碼",
+        "Invoice_Date": "發票開立日",
+        "Order_Number": "母單號",
+        "Order_Type": "銷售/取消/退貨",
+        "Product_Name": "品名",
+        "Profit_Sharings": "分潤%數",
+        "Promoter_Card_Number": "推薦會員帳號",
+        "Quantity": "數量",
+        "Reward_Daily_Points": "傭金",
+        "Sub_Order_Number": "子單號",
+        "Utm_Mall_ID": "推薦方式",
+        "Utm_Product_Guid": "分享來源",
+    }
 }
 
 SELECT
