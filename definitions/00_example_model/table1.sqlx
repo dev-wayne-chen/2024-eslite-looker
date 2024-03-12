@@ -6,6 +6,7 @@ config {
         // 看欄位中英對照(現有資料整理), 不是每個欄位都有，
         // 之後在 Looker 內用 replace 功能把 description 改成 label 就可以中文化了
         // 要確認 source table 本身有沒有 pii, 有的話要先放 tag
+        // 務必注意：不管 欄位中英對照(現有資料整理) 有沒有中文 description，只要有 ["pii" / "confidential"] 欄位就一定要加
         "age_range": "年齡",
         "date": "date",
         "Eslite_SN": "26碼",
@@ -15,8 +16,8 @@ config {
         "MCH": "MCH",
         "MCH3": "MCH3",
         "Order_Number": {
-          "description": "訂單編號",
-          "bigqueryPolicyTags": [env_variables.confidential_tag]
+            "description": "訂單編號",
+            "bigqueryPolicyTags": [env_variables.confidential_tag]
         },
         "paid_card_level_desc": "卡別",
         "Payment_Type_Desc": "付款方式",
