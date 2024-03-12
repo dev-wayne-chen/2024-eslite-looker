@@ -7,12 +7,12 @@
     "main_orders",
     "sub_order_items",
     "sub_orders",
-
     "aff_performance_record",
     "allowance_detail",
     "target",
     "loyalty_type",
     "product"
+
 ].forEach((name) =>
     declare({
         database: env_variables.ec_project,
