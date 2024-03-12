@@ -212,8 +212,8 @@ SELECT
   ec2_order_item_detail_all.zzconsi AS zzconsi,
   ec2_order_item_detail_all.zzrtv1 AS zzrtv1
 FROM
-  ${ref("ec-dev-412708", "ec2", "order_item_detail_all")} AS ec2_order_item_detail_all
+  ${ref("ec2", "order_item_detail_all")} AS ec2_order_item_detail_all
 LEFT JOIN
-  ${ref("ec-dev-412708", "prpt", "category_product1")} AS prpt_category_product1
+  ${ref("prpt", "category_product1")} AS prpt_category_product1
 ON
   ec2_order_item_detail_all.mch = prpt_category_product1.mch
