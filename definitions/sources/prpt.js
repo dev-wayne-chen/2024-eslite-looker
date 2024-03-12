@@ -3,7 +3,7 @@
 
 ].forEach((name) =>
     declare({
-        database: "ec-dev-412708",
+        database: env_variables.ec_project,
         schema: "prpt",
         name,
     })
