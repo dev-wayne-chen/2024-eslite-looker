@@ -3,6 +3,9 @@
   "assertionSchema": "dataform_assertions",
   "warehouse": "bigquery",
   "defaultDatabase": "eslite-data-pipeline",
-  "defaultLocation": "asia-east1"
+  "defaultLocation": "asia-east1",
+  "vars": {
+    "env": "uat"
+  }
 }
     
