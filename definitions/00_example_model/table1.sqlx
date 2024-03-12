@@ -36,6 +36,7 @@ config {
 
   -- Drive Link: https://drive.google.com/drive/folders/1NS6JBxOzlXaVlQ2KMDJIYfQIq6tavFsw
   -- Query 在 Drive 裡面的 data source 資料夾, query 檔案名稱前面的編號表示屬於哪個 model
+  -- 要去 eslite_pipeline_ec 檔案看 schema 找 pii 欄位，自己核對後上 policy tag (個資用 pii / 機敏用 confidential)
   -- aead 加密先做，但comment out，直到資料都上 production 後再調回來
 SELECT
   account_source AS account_source,
@@ -72,7 +73,8 @@ SELECT
   es_so_number AS es_so_number,
   eslite_discount_amount AS eslite_discount_amount,
   eslite_discount_amount_price AS eslite_discount_amount_price,
-  ${func_aead.deterministic_decrypt("eslite_sn")} AS eslite_sn,
+  -- ${func_aead.deterministic_decrypt("eslite_sn")} AS eslite_sn,
+  eslite_sn,
   esp_billing_number AS esp_billing_number,
   esp_dn_number AS esp_dn_number,
   esp_invoice_number AS esp_invoice_number,
